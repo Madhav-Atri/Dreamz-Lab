@@ -13,6 +13,10 @@ RUN apt update && \
 
 COPY startup.sh /usr/local/bin/startup.sh
 
+COPY xstartup /usr/local/bin/xstartup
+
 RUN chmod +x /usr/local/bin/startup.sh
+
+RUN chmod +x /usr/local/bin/xstartup
 
 CMD ["/usr/local/bin/startup.sh"]

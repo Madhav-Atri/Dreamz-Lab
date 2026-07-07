@@ -4,6 +4,10 @@ echo "Starting DreamzLab..."
 
 mkdir -p ~/.vnc
 
+cp /usr/local/bin/xstartup ~/.vnc/xstartup
+
+chmod +x ~/.vnc/xstartup
+
 echo "dreamzlab" | vncpasswd -f > ~/.vnc/passwd
 
 chmod 600 ~/.vnc/passwd
