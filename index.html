@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>DREAMZLAB</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="glitch" id="glitchOverlay" style="display: none;">Initializing VM...</div>
+
+  <header>
+    <div class="logo" onclick="goHome()">DREAMZLAB</div>
+    <div class="auth-buttons">
+      <button onclick="openModal('login')">Login</button>
+      <button onclick="openModal('signup')">Sign Up</button>
+    </div>
+  </header>
+
+  <section class="hero" id="home">
+    <h1>Make your career in cyber security now!</h1>
+    <button onclick="startWithGlitch()">GET STARTED</button>
+  </section>
+
+  <section id="vmPage">
+    <button onclick="goBack()" style="margin-bottom: 2rem; font-size: 0.7rem; background: transparent; color: var(--primary); border: 1px solid var(--primary); padding: 0.5rem 1rem; cursor: pointer;">← Back</button>
+    <h2> Launch Your Kali Linux VM</h2>
+    <p>Connect to a Kali Linux machine directly in your browser. NoVNC-powered. Game on.</p>
+    <div class="actions">
+      <button id="launchBtn">Start VM</button>
+      <button id="stopBtn" style="display:none;">Stop VM</button>
+      <span id="statusMsg"></span>
+    </div>
+    <div id="vmContainer" style="display:none;">
+      <iframe src="http://your_public_ip:6080/vnc.html" title="Kali VM"></iframe>
+    </div>
+  </section>
+
+  <section class="billing-section fade-on-scroll " id="aboutSection">
+    <h2>What is DREAMZLAB?</h2>
+    <p style="max-width: 800px; margin: 2rem auto; font-size: 0.7rem; line-height: 1.6; color: #ccc;">
+      DREAMZLAB is your gateway into the world of cybersecurity. We provide beginner-friendly virtual machines hosted on the cloud to help students, ethical hackers, and tech enthusiasts practice penetration testing, network forensics, exploit development, and much more — all from your browser. No setup needed, just click and hack ethically.
+    </p>
+    <p style="margin-top: 2rem;"> Learn |  Practice |  Launch your career</p>
+
+    <br/><br/>
+    <p style="color: #ccc; margin-top: 4rem;">
+      Scroll down for more Guide and Pricing Details.
+    </p>
+    <p style="margin-top: 3rem;">Coming Soon:  AI lab access |  OSINT Tools |  VPN Access</p>
+  </section>
+
+  <section class="spacer"></section>
+
+  <section class="billing-section fade-on-scroll" id="vmManualSection">
+  <h2> VM Manual & Toolset Overview</h2>
+
+  <div style="max-width: 800px; margin: 2rem auto; font-size: 0.7rem; color: #ccc; line-height: 1.6;">
+    <h3 style="color: var(--primary); margin-bottom: 1rem;">🔧 VM Specifications</h3>
+    <ul style="padding-left: 1rem;">
+      <li> <strong>OS:</strong> Kali Linux 2023.2</li>
+      <li> <strong>Access:</strong> Browser-based NoVNC terminal</li>
+      <li> <strong>Specs:</strong> 2 vCPU | 4 GB RAM</li>
+      <li> <strong>Persistence:</strong> Non-persistent (auto-resets)</li>
+    </ul>
+
+    <h3 style="color: var(--primary); margin: 2rem 0 1rem;">🛠️ Pre-installed Tools</h3>
+    <ul style="padding-left: 1rem;">
+      <li> Nmap – Network Scanning</li>
+      <li> Burp Suite – Web Application Security</li>
+      <li> Metasploit Framework – Exploitation Toolkit</li>
+      <li> Nikto – Web Vulnerability Scanner</li>
+      <li> John the Ripper – Password Cracking</li>
+      <li> Python3, gcc, vim, net-tools, and more</li>
+    </ul>
+
+    <h3 style="color: var(--primary); margin: 2rem 0 1rem;">📘 Usage Guide</h3>
+    <ul style="padding-left: 1rem;">
+      <li>Click <strong>Start VM</strong> on the previous section</li>
+      <li>Wait for the <code>💻 VM Running</code> status</li>
+      <li>Use terminal or tools inside the browser window</li>
+      <li>When done, click <strong>Stop VM</strong> to release resources</li>
+    </ul>
+  </section>
+
+  <section class="spacer"></section>
+
+  <section class="billing-section fade-on-scroll" id="billingSection">
+    <h2> Choose Your Plan</h2>
+    <div class="billing-cards">
+      <div class="card">
+        <h3>Free Plan</h3>
+        <p> - Access: <strong>3 hrs/day</strong></p>
+        <p> - Wait if VMs are busy</p>
+        <p> - Shared cloud machine</p>
+        <button>Select Free</button>
+      </div>
+      <div class="card">
+        <h3> Premium Plan</h3>
+        <p> - Access: <strong>Unlimited</strong></p>
+        <p> - Instant VM launch</p>
+        <p> - Private cloud machine</p>
+        <button>Upgrade</button>
+      </div>
+    </div>
+    
+  </section>
+
+  
+
+ <section class="footer-section visible" id="contactSection">
+  <h2 style="color: #fff;">📬 Contact</h2>
+  <p style="font-size: 0.7rem; color: #ccc; margin: 1rem 0;">
+    Made by <strong style="color: var(--primary);">Madhav Atri</strong>
+  </p>
+  <p style="font-size: 0.7rem;">
+    <a href="https://www.linkedin.com/in/madhav-atri-4330aa340/" target="_blank"
+       style="color: var(--primary); text-decoration: underline;">
+       Connect on LinkedIn
+    </a>
+  </p>
+</section>
+
+  <!-- LOGIN/SIGNUP MODAL -->
+  <div class="modal" id="authModal">
+    <div class="modal-content">
+      <button class="close-btn" onclick="closeModal()">✖</button>
+      <h3 id="modalTitle">Login</h3>
+      <input type="email" placeholder="Email" />
+      <input type="password" placeholder="Password" />
+      <button onclick="closeModal()">Submit</button>
+    </div>
+  </div>
+</body>
+<script src="script.js"></script>
+</html>
