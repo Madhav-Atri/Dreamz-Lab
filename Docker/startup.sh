@@ -1,11 +1,15 @@
 #!/bin/bash
 
-echo "Starting DreamzLab Kali Container..."
+echo "Starting DreamzLab..."
 
 mkdir -p ~/.vnc
 
+echo "dreamzlab" | vncpasswd -f > ~/.vnc/passwd
+
+chmod 600 ~/.vnc/passwd
+
 touch ~/.Xauthority
 
-startxfce4 &
+vncserver :1 -geometry 1280x720 -depth 24
 
-tail -f /dev/null
+tail -f /root/.vnc/*.log
