@@ -17,3 +17,7 @@ touch ~/.Xauthority
 vncserver :1 -geometry 1280x720 -depth 24
 
 tail -f /root/.vnc/*.log
+
+websockify \
+6080 \
+localhost:5901 \
