@@ -10,13 +10,20 @@ RUN apt update && \
     curl \
     git \
     python3 \
-    python3-pip \
+    python3-pip \doce
+    python3-venv \
     net-tools && \
     apt clean
 
+RUN python3 -m venv /opt/venv
+
+ENV PATH="/opt/venv/bin:$PATH"
+
 RUN git clone https://github.com/novnc/noVNC.git /opt/noVNC
 
-RUN pip3 install websockify
+RUN ln -s opt/noVNC/vnc.html /opt/noVNC/index.html
+
+RUN pip install --no-cache-dir websockify
 
 COPY startup.sh /usr/local/bin/startup.sh
 
@@ -24,7 +31,13 @@ COPY xstartup /usr/local/bin/xstartup
 
 RUN chmod +x /usr/local/bin/startup.sh
 
+RUN mkdir -p /root/.vnc
+
 RUN chmod +x /usr/local/bin/xstartup
 
-CMD ["/usr/local/bin/startup.sh"]
+EXPOSE 6080
+EXPOSE 5901
 
+WORKDIR /root
+
+CMD ["/usr/local/bin/startup.sh"]
