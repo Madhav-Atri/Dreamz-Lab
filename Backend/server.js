@@ -30,3 +30,48 @@ app.get("/test", (req, res) => {
         res.send("<pre>" + stdout + "</pre>");
     });
 });
+
+app.post("/start", (req, res) => {
+
+    const command = 'docker run -d -p 6080:6080 -p 5901:5901 --name dreamzlab-test dreamzlab-kali';
+
+    exec(command , (error, stdout, stderr) => {
+
+        if (error) {
+            console.error(error);
+            return res.status(500).send(error.message);
+        }
+
+        if (stderr) {
+            console.log(stderr);
+        }
+
+        res.json({
+            success: true,
+            containerId: stdout.trim()
+        });
+    });
+});
+
+app.post("/stop", (req, res) => {
+
+    const command = `
+docker stop dreamzlab-test &&
+docker rm dreamzlab-test
+`;
+
+    exec(command, (error, stdout, stderr) => {
+
+        if (error) {
+            console.error(error);
+            return res.status(500).send(error.message);
+        }
+
+        res.json({
+            success: true,
+            message: "DreamzLab stopped successfully."
+        });
+
+    });
+
+});
