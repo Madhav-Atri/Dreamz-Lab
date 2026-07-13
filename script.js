@@ -62,45 +62,96 @@
     }
 
 
-    const launchBtn = document.getElementById("launchBtn");
-    const stopBtn = document.getElementById("stopBtn");
-    const statusMsg = document.getElementById("statusMsg");
-    const vmContainer = document.getElementById("vmContainer");
+const launchBtn = document.getElementById("launchBtn");
+const stopBtn = document.getElementById("stopBtn");
+const statusMsg = document.getElementById("statusMsg");
+const vmContainer = document.getElementById("vmContainer");
+const vmFrame = document.querySelector("iframe");
 
-    launchBtn.addEventListener("click", async () => {
+// --------------------
+// START VM
+// --------------------
 
-    statusMsg.textContent = "Launching VM...";
+launchBtn.addEventListener("click", async () => {
+
+    statusMsg.textContent = "🚀 Launching DreamzLab...";
     launchBtn.disabled = true;
 
     try {
 
-        const response = await fetch("http://localhost:3000/start");
+        const response = await fetch("http://localhost:3000/start", {
+            method: "POST"
+        });
 
         const data = await response.json();
 
-        document.querySelector("iframe").src = data.url;
+        if (!data.success) {
+            throw new Error("Failed to start container");
+        }
+
+        statusMsg.textContent = "⏳ Preparing Kali Desktop...";
+
+        // Give the container a few seconds to start VNC + noVNC
+        await new Promise(resolve => setTimeout(resolve, 4000));
+
+        vmFrame.src = data.url;
 
         vmContainer.style.display = "block";
 
+        launchBtn.style.display = "none";
         stopBtn.style.display = "inline-block";
 
         statusMsg.textContent = "💻 VM Running";
 
     } catch (err) {
 
+        console.error(err);
+
         statusMsg.textContent = "❌ Failed to start VM";
 
         launchBtn.disabled = false;
 
+    }
+
+});
+
+// --------------------
+// STOP VM
+// --------------------
+
+stopBtn.addEventListener("click", async () => {
+
+    statusMsg.textContent = "🛑 Stopping VM...";
+
+    try {
+
+        const response = await fetch("http://localhost:3000/stop", {
+            method: "POST"
+        });
+
+        const data = await response.json();
+
+        if (!data.success) {
+            throw new Error("Failed to stop VM");
+        }
+
+        vmFrame.src = "";
+
+        vmContainer.style.display = "none";
+
+        stopBtn.style.display = "none";
+
+        launchBtn.style.display = "inline-block";
+        launchBtn.disabled = false;
+
+        statusMsg.textContent = "✅ VM Stopped";
+
+    } catch (err) {
+
         console.error(err);
 
-    }
-    });
+        statusMsg.textContent = "❌ Failed to stop VM";
 
-    stopBtn.addEventListener("click", () => {
-      statusMsg.textContent = "🛑 VM Stopped";
-      stopBtn.style.display = "none";
-      vmContainer.style.display = "none";
-      launchBtn.disabled = false;
-    });
-    glitchOverlay
+    }
+
+});
