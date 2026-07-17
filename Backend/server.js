@@ -47,8 +47,13 @@ app.post("/start", (req, res) => {
         }
 
         res.json({
+
             success: true,
-            containerId: stdout.trim()
+
+            containerId: stdout.trim(),
+
+            url: "http://localhost:6080/vnc.html"
+
         });
     });
 });
